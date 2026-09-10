@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    
+<article class="project-detail">
+
+<div class="project-header">
+
+    <p class="project-label">
+        2026 · DESIGN · ELECTRONICS · PROGRAMMING
+    </p>
+
+    <h1>
+        Backseat Minder
+    </h1>
+
+    <p class="project-summary">
+        An engineering system designed to monitor conditions
+        inside a vehicle and detect potentially dangerous
+        situations involving a child or occupant.
+    </p>
+
+</div>
+
+
+<section class="project-detail-section">
+
+    <h2>Overview</h2>
+
+    <p>
+        Backseat Minder is an engineering system designed
+        to monitor the interior conditions of a vehicle and
+        identify potentially dangerous situations. For this project, I was in charge of 
+        creating the battery charging systems and bridge the OBDII
+        to the main microcomputer in control of the sensors. I also helped a bit
+        with the coding for the sensor as well as the portal for the driver to receive alerts.
+    </p>
+
+</section>
+
+
+<section class="project-detail-section">
+
+    <h2>System Design</h2>
+
+    <p>
+        The battery system uses a charging module (TP4056) to charge 2 rechargable lithium
+        ion batteries and converters to first convert the voltage from 12 V to 5 V then after 
+        the charging module, there is another buck boost converter to change the voltage form 5 to 3.3 V for the ESP32.
+    </p>
+
+    <div class="project-hero-image">
+        <figure>
+            <img src="images/batterysys.png" alt="Schematic of the Battery system made in Fritzing">
+        </figure>
+    </div>
+
+</section>
+
+
+<section class="project-detail-section">
+
+    <h2>Sensing &amp; Detection</h2>
+
+    <p>
+        Multiple sensing methods were considered to monitor
+        temperature, presence, and conditions inside the vehicle. 
+        There is a camera system built to recognize a human face, 
+        an infrared camera to detect human internal temperature as 
+        well as if the baby is in the car, and a mmWave Radar to 
+        detect the baby's presence. Then we implemented a temperature
+        humidity sensor to detect the inside cabin temperature of a car.
+    </p>
+
+</section>
+
+
+<section class="project-detail-section">
+
+    <h2>Programming</h2>
+
+    <p>
+        The system logic was developed using an ESP32-based
+        control system and programmed to respond to sensor
+        measurements. The sensors use machine learning algorithms found online and the linear regression
+        model was made by us.
+    </p>
+
+</section>
+
+
+<section class="project-detail-section">
+
+    <h2>Images</h2>
+
+    <div class="project-gallery">
+
+        <figure>
+            <div class="project-hero-image">
+                <img src="images/prototypepower.jpeg">
+            </div>
+            <figcaption>
+                System hardware.
+            </figcaption>
+        </figure>
+
+        <figure>
+            <div class="project-hero-image">
+                <img src="images/2ndproto(1).jpg">
+            </div>
+            <figcaption>
+                Second Battery system prototype
+            </figcaption>
+        </figure>
+
+    </div>
+
+</section>
+
+
+</article>
+
+</body>
+</html>

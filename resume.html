@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Resume | Aaradhaya Sutrave</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <header class="site-header">
+
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                AARADHAYA SUTRAVE
+            </a>
+
+            <div class="nav-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="work.html">
+                    Work
+                </a>
+
+                <a href="resume.html">
+                    Resume
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+
+    <main>
+
+
+        <!-- =========================
+             RESUME INTRO
+        ========================== -->
+
+        <section class="resume-hero">
+
+            <p class="section-label">
+                01 — RESUME
+            </p>
+
+            <h1>
+                My Resume.
+            </h1>
+
+            <p class="resume-introduction">
+
+                Mechanical Engineering student at Texas A&M University
+                with experience in engineering design, simulation,
+                manufacturing, and experimental research.
+
+            </p>
+
+        </section>
+
+
+
+<!-- =========================
+     RESUME DOCUMENT
+========================== -->
+
+<section class="resume-viewer">
+
+    <div class="resume-layout">
+
+        <!-- RESUME PAPER -->
+
+        <div class="resume-document">
+
+            <div class="document-label">
+                Resume
+            </div>
+
+            <div class="resume-paper">
+
+                <canvas id="resume-canvas"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTION BUTTONS -->
+
+        <div class="resume-actions">
+
+            <p class="resume-actions-label">
+                DOCUMENT
+            </p>
+
+
+            <a
+                href="MechanicalENG Resume Aaradhaya Sutrave.pdf"
+                target="_blank"
+                class="resume-action-button">
+
+                <span>
+                    OPEN RESUME
+                </span>
+
+                <span>
+                    ↗
+                </span>
+
+            </a>
+
+
+            <a
+                href="MechanicalENG Resume Aaradhaya Sutrave.pdf"
+                download
+                class="resume-action-button">
+
+                <span>
+                    DOWNLOAD PDF
+                </span>
+
+                <span>
+                    ↓
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <p>
+            © 2026 Aaradhaya Sutrave
+        </p>
+
+        <p>
+            Mechanical Engineering · Texas A&M University
+        </p>
+
+    </footer>
+
+
+
+    <script type="module">
+
+    import * as pdfjsLib
+        from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";
+
+
+    // Tell PDF.js where its worker is located.
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
+
+
+    const pdfPath =
+        "MechanicalENG Resume Aaradhaya Sutrave.pdf";
+
+
+    const canvas =
+        document.getElementById("resume-canvas");
+
+
+    const context =
+        canvas.getContext("2d");
+
+
+    async function renderResume() {
+
+        try {
+
+            console.log("Loading resume...");
+
+
+            const pdf =
+                await pdfjsLib.getDocument(pdfPath).promise;
+
+
+            console.log("PDF loaded.");
+
+
+            const page =
+                await pdf.getPage(1);
+
+
+            const container =
+                document.querySelector(".resume-paper");
+
+
+            const containerWidth =
+                container.clientWidth;
+
+
+            const originalViewport =
+                page.getViewport({
+                    scale: 1
+                });
+
+
+            const scale =
+                containerWidth /
+                originalViewport.width;
+
+
+            const viewport =
+                page.getViewport({
+                    scale: scale
+                });
+
+
+            canvas.width =
+                viewport.width;
+
+
+            canvas.height =
+                viewport.height;
+
+
+            await page.render({
+
+                canvasContext: context,
+
+                viewport: viewport
+
+            }).promise;
+
+
+            console.log("Resume rendered.");
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "RESUME ERROR:",
+                error
+            );
+
+        }
+
+    }
+
+
+    renderResume();
+
+
+    window.addEventListener(
+        "resize",
+        renderResume
+    );
+
+</script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

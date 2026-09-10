@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<article class="project-detail">
+
+<div class="project-header">
+
+    <p class="project-label">
+        2026 · RESEARCH · PROGRAMMING · MATLAB · FEA
+    </p>
+
+    <h1>
+        Mesh Generation with Voronoi Tessellation
+    </h1>
+
+    <p class="project-summary">
+        Computational mesh-generation project using MATLAB,
+        Voronoi tessellation, and half-edge data structures
+        for finite element applications.
+    </p>
+
+</div>
+
+
+<div class="project-hero-image">
+    <figure>
+        <img src="images/Wigner.png" alt="Wigner Seitz transformation">
+    </figure>
+</div>
+
+
+<section class="project-detail-section">
+
+    <h2>Overview</h2>
+
+    <p>
+        Developed computational geometry algorithms in MATLAB
+        to generate and manipulate custom 2D meshes and dynamic 
+        lattice structures. Beginning with the point-in-polygon 
+        verification algorithms utilizing vector cross products 
+        and Jordan's curve theorem, the scope expanded to generating Voronoi shapes. To overcome infinite sized shapes,
+        ghost point were made to establish closed and uniform polygon cells.
+        This was then modified by using basis vectors and linear algebra principles to create
+        2D bravais lattices and Wigner-Seitz cells. Linear transformation was also animated while maintaining borders.
+
+    </p>
+
+</section>
+
+
+<section class="project-detail-section">
+
+    <h2>Voronoi Tessellation</h2>
+
+    <p>
+        Voronoi tessellation was used to generate geometric
+        structures that could be processed into computational
+        meshes.
+    </p>
+
+    <div class="project-hero-image">
+        <figure> 
+            <img src="images/voronoi.png" alt="Voronoi diagram simulated">
+        </figure>
+    </div>
+
+</section>
+
+
+<section class="project-detail-section">
+
+    <h2>Half-Edge Data Structure</h2>
+
+    <p>
+        A half-edge data structure was implemented to organize
+        and analyze relationships between mesh vertices,
+        edges, and faces.
+    </p>
+
+    <div class="project-hero-image">
+        <figure>
+            <img src="images/point.png">
+        </figure>
+    </div>
+</section>
+
+<section class="project-detail-section">
+
+    <h2>Images</h2>
+
+    <div class="project-gallery">
+
+        <figure>
+            <div class="project-hero-image">
+                <figure>
+                    <img src="images/weird.png">
+                </figure>
+            </div>
+            <figcaption>
+                Failed generated computational mesh.
+            </figcaption>
+        </figure>
+
+        <figure>
+            <div class="project-hero-image">
+                <figure>
+                    <img src="images/WS.png">
+                </figure>
+            </div>
+            <figcaption>
+                Stationary Wigner Seitz cells.
+            </figcaption>
+        </figure>
+
+    </div>
+
+</section>
+
+
+<div class="project-report">
+
+    <div>
+
+        <span class="project-report-label">
+            PROJECT DOCUMENT
+        </span>
+
+        <span class="project-report-title">
+            Voronoi Mesh Generation
+        </span>
+
+    </div>
+
+    <a href="Documents/Semester Research Progress Report-1.pdf" target="_blank">
+        OPEN REPORT ↗
+    </a>
+
+</div>
+
+</article>
+
+</body>
+</html>
