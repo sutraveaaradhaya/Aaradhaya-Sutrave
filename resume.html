@@ -180,111 +180,112 @@
 
     <script type="module">
 
-    import * as pdfjsLib
-        from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";
+import * as pdfjsLib
+    from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";
 
 
-    // Tell PDF.js where its worker is located.
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
 
 
-    const pdfPath =
-        "MechanicalENG Resume Aaradhaya Sutrave.pdf";
+const pdfPath =
+    "MechanicalENG Resume Aaradhaya Sutrave.pdf";
 
 
-    const canvas =
-        document.getElementById("resume-canvas");
+const canvas =
+    document.getElementById("resume-canvas");
 
 
-    const context =
-        canvas.getContext("2d");
+const context =
+    canvas.getContext("2d");
 
 
-    async function renderResume() {
+// Cache the loaded PDF so zooming doesn't re-fetch it.
+let pdfDoc = null;
 
-        try {
-
-            console.log("Loading resume...");
-
-
-            const pdf =
-                await pdfjsLib.getDocument(pdfPath).promise;
-
-
-            console.log("PDF loaded.");
+// Track the render currently in progress so a new one
+// (triggered by zooming/resizing) can cancel it first
+// instead of drawing over it at the same time. Two
+// overlapping renders on one canvas is what caused the
+// flipped/mirrored look when zooming.
+let currentRenderTask = null;
 
 
-            const page =
-                await pdf.getPage(1);
+async function renderResume() {
 
+    try {
 
-            const container =
-                document.querySelector(".resume-paper");
-
-
-            const containerWidth =
-                container.clientWidth;
-
-
-            const originalViewport =
-                page.getViewport({
-                    scale: 1
-                });
-
-
-            const scale =
-                containerWidth /
-                originalViewport.width;
-
-
-            const viewport =
-                page.getViewport({
-                    scale: scale
-                });
-
-
-            canvas.width =
-                viewport.width;
-
-
-            canvas.height =
-                viewport.height;
-
-
-            await page.render({
-
-                canvasContext: context,
-
-                viewport: viewport
-
-            }).promise;
-
-
-            console.log("Resume rendered.");
-
-
+        if (!pdfDoc) {
+            pdfDoc = await pdfjsLib.getDocument(pdfPath).promise;
         }
 
-        catch (error) {
+        const page =
+            await pdfDoc.getPage(1);
 
-            console.error(
-                "RESUME ERROR:",
-                error
-            );
+        const container =
+            document.querySelector(".resume-paper");
 
+        const containerWidth =
+            container.clientWidth;
+
+        if (!containerWidth) {
+            return;
+        }
+
+        const originalViewport =
+            page.getViewport({ scale: 1 });
+
+        const scale =
+            containerWidth / originalViewport.width;
+
+        const viewport =
+            page.getViewport({ scale: scale });
+
+        // Cancel any render still in progress before
+        // touching the canvas again.
+        if (currentRenderTask) {
+            currentRenderTask.cancel();
+        }
+
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        currentRenderTask = page.render({
+            canvasContext: context,
+            viewport: viewport
+        });
+
+        await currentRenderTask.promise;
+
+        currentRenderTask = null;
+
+    }
+
+    catch (error) {
+
+        // A cancelled render throws this on purpose when
+        // zooming fast — not a real error.
+        if (error?.name !== "RenderingCancelledException") {
+            console.error("RESUME ERROR:", error);
         }
 
     }
 
+}
 
-    renderResume();
+
+renderResume();
 
 
-    window.addEventListener(
-        "resize",
-        renderResume
-    );
+// Debounce so a zoom/resize gesture only triggers one
+// re-render shortly after it settles, instead of a flurry
+// of overlapping ones.
+let resizeTimeout;
+
+window.addEventListener("resize", function () {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(renderResume, 150);
+});
 
 </script>
 
