@@ -21,20 +21,34 @@
     </h1>
 
     <p class="project-summary">
-        Python-based simulation investigating the motion
-        and landing behavior of a Mars rover.
+        A Python simulation of a Mars rover mission, from the
+        parachute descent and landing to driving across rough
+        Martian terrain, built to make the rover handle any
+        terrain while being as fast as possible.
     </p>
 
 </div>
+
+
+<div class="project-hero-image">
+    <figure>
+        <img src="images/mars-speed-surface.png" alt="3D surface of max rover speed vs. rolling resistance and terrain slope">
+    </figure>
+</div>
+
+
 <section class="project-detail-section">
 
     <h2>Overview</h2>
 
     <p>
-        This project used computational modeling to simulate
-        the behavior of a Mars rover during its landing sequence. 
-        Simulation was optimized multiple times to adhere to 
-        certain parameters and requirements.
+        This project was built in three phases. First we modeled the
+        rover's drivetrain and how fast it can move. Then we simulated
+        it driving over random Mars terrain. Finally we simulated the
+        descent and landing, including the parachute, rockets, and sky
+        crane that lower the rover to the surface. Our goal was to
+        optimize the rover so it can handle any kind of terrain and be
+        the fastest.
     </p>
 
 </section>
@@ -42,34 +56,90 @@
 
 <section class="project-detail-section">
 
-    <h2>Simulation Model</h2>
+    <h2>Phase 1: Rover Drivetrain Model</h2>
 
     <p>
-        A mathematical model was developed to represent
-        the rover's motion under the simulated conditions.
+        We wrote Python functions for the forces on the rover, which
+        are gravity, rolling resistance, and the drive force from the
+        motors through a speed reducer. From the DC motor model, a
+        single motor reaches a maximum power of about 161.5 W at a
+        shaft speed of 1.9 rad/s. We then studied how the rover's top
+        speed changes with terrain slope and rolling resistance. The
+        rover is fastest on flat ground with low resistance, and its
+        top speed drops as either one increases.
     </p>
+
+    <div class="project-hero-image">
+        <figure>
+            <img src="images/mars-motor-power.png" alt="Power output vs. motor shaft speed for a single motor">
+        </figure>
+    </div>
+
 </section>
 
 
 <section class="project-detail-section">
 
-    <h2>Python Implementation</h2>
+    <h2>Phase 2: Driving Over Mars Terrain</h2>
 
     <p>
-        Python was used to implement the simulation and
-        calculate the rover's motion throughout the landing.
+        We used cubic interpolation to turn measured terrain data into
+        a smooth terrain-angle profile, and interpolated motor
+        efficiency against torque. An ODE solver then drove the rover
+        across 1,000 m of this terrain while tracking its position,
+        speed, power, and battery energy.
     </p>
+
+    <div class="project-hero-image">
+        <figure>
+            <img src="images/mars-terrain.png" alt="Interpolated terrain angle vs. position">
+            <img src="images/mars-drive-results.png" alt="Rover position, velocity, and power vs. time">
+        </figure>
+    </div>
+
+    <p>
+        The rover covered the 1,000 m in about 2,843 s, with a top
+        speed of 0.36 m/s and an average of 0.34 m/s. It needed about
+        998 kJ of battery energy, which is more than the 907 kJ the
+        lithium iron phosphate pack holds. This showed that the design
+        would not complete the mission without changes.
+    </p>
+
 </section>
 
 
 <section class="project-detail-section">
 
-    <h2>Results</h2>
+    <h2>Phase 3: Descent and Landing</h2>
 
     <p>
-        The simulation was used to examine the rover's
-        trajectory and landing behavior.
+        We built the entry, descent, and landing (EDL) simulation. It
+        starts at 11 km altitude, moving at 590 m/s, and steps through
+        each mission event: heat shield ejection, parachute ejection,
+        rocket firing with PID speed and altitude control, and the sky
+        crane lowering the rover. The equations of motion were solved
+        with the DOP853 method.
     </p>
+
+    <div class="project-hero-image">
+        <figure>
+            <img src="images/mars-edl-flowchart.png" alt="Flowchart of the EDL simulation">
+        </figure>
+    </div>
+
+    <p>
+        We then ran a study on parachute size. With our updated drag
+        model, parachute diameters of about 17.5 to 18.5 m landed the
+        rover safely while keeping the descent time short, between
+        about 200 and 300 seconds.
+    </p>
+
+    <div class="project-hero-image">
+        <figure>
+            <img src="images/mars-parachute-study.png" alt="Landing time, touchdown speed, and landing success vs. parachute diameter">
+        </figure>
+    </div>
+
 </section>
 
 

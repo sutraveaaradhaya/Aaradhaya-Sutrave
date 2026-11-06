@@ -71,8 +71,19 @@
     <h2>Data Acquisitions</h2>
 
     <p>
-        LabVIEW was used to acquire and record measurements
-        from the experimental instrumentation.
+        LabVIEW was used to acquire and record measurements from the
+        experimental instrumentation. The VI controls both the servo
+        motor that rotates a lens so the light hits the interferometer,
+        and the capture function of the lock-in amplifier. First, the
+        motor is initialized to the set position, velocity, and
+        acceleration it is supposed to run at during testing. At the
+        same time, the lock-in amplifier's signal processing and capture
+        settings are set. Once the user presses start, the servo motor
+        starts running and the lock-in amplifier starts scanning and
+        capturing. When the scan time is over, LabVIEW uses the lock-in
+        amplifier's capture buffer feature to string together all the
+        data captured over the scan and outputs it as a CSV file of the
+        test data.
     </p>
 
     <div class="project-hero-image">
@@ -90,8 +101,13 @@
     <h2>MATLAB Analysis</h2>
 
     <p>
-        MATLAB was used to process the acquired data and
-        investigate the measured optical response.
+        MATLAB was then used to process the acquired data and
+        investigate the optical signal response. Because the lock-in
+        amplifier already cleans up the signal coming into it, an FFT
+        of its output on its own shows just one peak at 0 Hz. To see the
+        actual frequency response, we brought the reference signal into
+        MATLAB and used it to demodulate the data, so the FFT shows the
+        signal clearly relative to the reference signal.
     </p>
 
     <div class="project-hero-image">
