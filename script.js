@@ -98,6 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const chronologicalOrder = [
 
+        "holographic-vision",
         "microheater",
         "lock-in-amplifier",
         "playground",
@@ -289,6 +290,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     const homepageProjects = [
+
+        {
+            year: "2026",
+            category: "RESEARCH · OPTICS · HOLOGRAPHY",
+            title: "Holographic Vision"
+        },
 
         {
             year: "2026",
